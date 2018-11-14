@@ -4,6 +4,9 @@ import { Tabs, Spin } from 'antd';
 import { Gallery } from './Gallery';
 import { CreatePostButton } from './CreatePostButton';
 import { API_ROOT, TOKEN_KEY, AUTH_PREFIX, GEO_OPTIONS, POS_KEY } from '../constants';
+import { WrappedAroundMap } from './AroundMap';
+
+
 export class Home extends Component {
     state = {
         posts: [],
@@ -97,7 +100,12 @@ render() {
         {this.getGalleryPanelContent()}
 </TabPane>
     <TabPane tab="Map" key="2">
-        Content Of Tab 2
+        <WrappedAroundMap
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
     </TabPane>
     </Tabs>
 );
