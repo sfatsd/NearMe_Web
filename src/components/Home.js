@@ -41,26 +41,28 @@ onFailedLoadGeoLocation = () => {
 componentDidMount() {
     this.getGeoLocation();
 }
-loadNearbyPosts = () => {
-    const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+loadNearbyPosts = (location, radius) => {
+    const { lat, lon } = location ? location : JSON.parse(localStorage.getItem(POS_KEY));
+    const range = radius ? radius : 20;
     this.setState({ loadingPosts: true });
     return $.ajax({
-        url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
+        url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${range}`,
         method: 'GET',
         headers: {
             Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
         },
-    }).then((response) => {
-        this.setState({ posts: response, error: '' });
-    console.log(response);
-}, (error) => {
-        this.setState({ error: error.responseText });
-    }).then(() => {
-        this.setState({ loadingPosts: false });
-}).catch((error) => {
-        console.log(error);
-});
-}
+      }).then((response) => {
+         this.setState({ posts: response, error: '' });
+         console.log(response);
+      }, (error) => {
+         this.setState({ error: error.responseText });
+      }).then(() => {
+         this.setState({ loadingPosts: false });
+      }).catch((error) => {
+         console.log(error);
+      });
+ }
+
 getGalleryPanelContent = () => {
     if (this.state.error) {
         return <div>{this.state.error}</div>
@@ -91,19 +93,18 @@ render() {
     const TabPane = Tabs.TabPane;
     const createPostButton = <CreatePostButton loadNearbyPosts={this.loadNearbyPosts}/>;
     return (
-        <Tabs
-    onChange={this.onTabChange}
-    tabBarExtraContent={createPostButton}
-    className="main-tabs"
-        >
+        <Tabs onChange={this.onTabChange} tabBarExtraContent={createPostButton} className="main-tabs">
         <TabPane tab="Posts" key="1">
-        {this.getGalleryPanelContent()}
-</TabPane>
+            {this.getGalleryPanelContent()}
+        </TabPane>
     <TabPane tab="Map" key="2">
         <WrappedAroundMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+          loadNearbyPosts = {this.loadNearbyPosts}
+          posts={this.state.posts}
+          //googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&libraries=geometry,drawing,places"
           loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px` }} />}
+          containerElement={<div style={{ height: `600px` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
     </TabPane>

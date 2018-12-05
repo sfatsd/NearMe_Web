@@ -19,6 +19,7 @@ export class Main extends React.Component {
 
     getHome = () => {
         return this.props.isLoggedIn ? <Home/> : <Redirect to="/login"/>;
+        //return <Home/>;
     }
 
     getRoot = () => {
