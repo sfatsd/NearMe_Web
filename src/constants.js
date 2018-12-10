@@ -6,4 +6,5 @@ export const GEO_OPTIONS = {
     maximumAge: 3600000,
     timeout: 27000,
 };
+export const BACKGROUND_URL = 'https://images.unsplash.com/photo-1468136020796-0eec5226a897?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80';
 export const AUTH_PREFIX = 'Bearer';

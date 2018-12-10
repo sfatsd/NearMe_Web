@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import { API_ROOT } from '../constants';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
 
@@ -83,20 +83,21 @@ class RegistrationForm extends React.Component {
         return (
             <Form onSubmit={this.handleSubmit} className="register-form">
                 <FormItem
-                    {...formItemLayout}
-                    label="Username"
-                    hasFeedback
+                    //{...formItemLayout}
+                    //label="Username"
+                    //label="        "
+                    //hasFeedback
                 >
                     {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
                     })(
-                        <Input />
+                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username"/>
                     )}
                 </FormItem>
                 <FormItem
-                    {...formItemLayout}
-                    label="Password"
-                    hasFeedback
+                    //{...formItemLayout}
+                    //label="Password"
+                    //hasFeedback
                 >
                     {getFieldDecorator('password', {
                         rules: [{
@@ -105,13 +106,13 @@ class RegistrationForm extends React.Component {
                             validator: this.checkConfirm,
                         }],
                     })(
-                        <Input type="password" />
+                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
                     )}
                 </FormItem>
                 <FormItem
-                    {...formItemLayout}
-                    label="Confirm Password"
-                    hasFeedback
+                   // {...formItemLayout}
+                   // label="Confirm Password"
+                   // hasFeedback
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
@@ -120,12 +121,12 @@ class RegistrationForm extends React.Component {
                             validator: this.checkPassword,
                         }],
                     })(
-                        <Input type="password" onBlur={this.handleConfirmBlur} />
+                        <Input type="password" onBlur={this.handleConfirmBlur} placeholder="Confirm Password"/>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
-                    <p>I already have account, go back to <Link to ="/login">login</Link></p>
+                    <p className="footer"> Or <Link to ="/login" style={{textDecoration: "underline"}}>login</Link></p>
                 </FormItem>
             </Form>
         );

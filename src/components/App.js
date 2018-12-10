@@ -3,6 +3,7 @@ import { Header } from './Header';
 import { Main } from './Main';
 import { TOKEN_KEY } from '../constants';
 import '../styles/App.css';
+//import { BACKGROUND_URL } from '../constants';
 
 class App extends Component {
   state = {
